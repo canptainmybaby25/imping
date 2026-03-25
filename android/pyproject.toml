@@ -1,0 +1,33 @@
+[build-system]
+requires = ["briefcase>=0.3.16"]
+build-backend = "briefcase.app"
+
+[project]
+name = "IMPGING"
+version = "1.0.0"
+description = "IMPGING Q-Engine - Quantum-Inspired Gaming Classifier"
+license.file = "LICENSE"
+author = "canvasmybabybad.zo.computer"
+
+[tool.briefcase]
+project_name = "IMPGING"
+bundle = "com.imping.qengine"
+description = "IMPGING Q-Engine"
+copyright = "Copyright (c) 2026 canvasmybabybad.zo.computer"
+version = "1.0.0"
+
+[tool.briefcase.app.android]
+requires = ["psutil>=5.9.0"]
+sources = ["src/imping"]
+
+[tool.briefcase.app.linux]
+sources = ["src/imping"]
+
+[tool.briefcase.app.windows]
+sources = ["src/imping"]
+
+[tool.briefcase.app.macos]
+sources = ["src/imping"]
+
+[tool.briefcase.app.iOS]
+sources = ["src/imping"]

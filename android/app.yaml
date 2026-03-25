@@ -1,0 +1,11 @@
+application:
+  title: IMPGING Q-Engine
+  bundle_id: com.imping.qengine
+  version: 1.0.0
+  license:
+    file: ../LICENSE
+  description: "Quantum-Inspired Gaming Process Classifier"
+  icon:
+    System: yes
+  sources:
+    - imping
