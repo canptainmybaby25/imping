@@ -84,12 +84,15 @@ def cmd_game(args):
     
     if args.monitor:
         # Continuous game detection
-        print("🎮 IMPGING Game Detector — monitoring for games (Ctrl+C to stop)")
         detector = mod.GameDetector()
-        detector.start_monitoring()
-    elif args.action == "status":
+        try:
+            detector.start_monitoring()
+        except KeyboardInterrupt:
+            print("\n⏹️  Game detector stopped.")
+    elif args.action == "status" or args.status:
         # Show current game processes
-        games = mod.find_gaming_processes() if hasattr(mod, 'find_gaming_processes') else []
+        detector = mod.GameDetector()
+        games = detector.find_gaming_processes()
         if games:
             print("🎮 Active game processes:")
             for g in games:
@@ -97,8 +100,10 @@ def cmd_game(args):
         else:
             print("✅ No game processes detected")
     else:
-        print("Usage: imping game --monitor")
-        print("       imping game status")
+        # Default: show help
+        print("🎮 IMPGING Game Detector Commands:")
+        print("  imping game --monitor    # Continuous monitoring")
+        print("  imping game status       # Show current games")
 
 def cmd_hw(args):
     path = resolve_script("hardware-mapper.py")
@@ -177,7 +182,8 @@ def main():
     p = sub.add_parser("game", help="Game detector control")
     p.add_argument("action", choices=["start","stop","status"], nargs="?", default=None)
     p.add_argument("--game", type=str)
-    p.add_argument("--monitor", action="store_true")
+    p.add_argument("--monitor", action="store_true", help="Start continuous monitoring")
+    p.add_argument("--status", action="store_true", help="Show current game processes")
     p.set_defaults(func=cmd_game)
 
     p = sub.add_parser("hw", help="Hardware mapper control")
