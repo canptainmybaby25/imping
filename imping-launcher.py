@@ -109,7 +109,6 @@ def cmd_mimic(args):
         print("❌ mimic-engine.py not found")
         return
     mod = load_mod("mimic_engine", path)
-    import threading
     engine = mod.MimicEngine(
         mode=args.mode,
         interval=args.interval,
@@ -126,9 +125,10 @@ def cmd_mimic(args):
         print(f"\n{'─'*60}")
         print(f"  IMPGING processes : {imp}")
         print(f"  Hostile detected  : {hostile}")
-        print(f"  Mimic candidates : {mimic}")
-        print(f"  Energy budget    : {engine.energy_budget:.3f}")
+        print(f"  Mimic candidates  : {mimic}")
+        print(f"  Energy budget     : {engine.energy_budget:.3f}")
         return
+    # Continuous mode (default when --monitor or no flags)
     print(f"⚛️  Mimic Engine running in {args.mode} mode — Ctrl+C to stop")
     engine.start()
 
@@ -188,6 +188,7 @@ def main():
     p_mimic.add_argument("--no-kill", action="store_true")
     p_mimic.add_argument("--no-efficiency", action="store_true")
     p_mimic.add_argument("--no-protect", action="store_true")
+    p_mimic.add_argument("--monitor", action="store_true")
     p_mimic.set_defaults(func=cmd_mimic)
 
     args = parser.parse_args()
