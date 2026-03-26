@@ -4,7 +4,6 @@ IMPGING - Cross-Platform Launcher
 Handles all IMPGING operations from a single unified interface.
 """
 import sys, os, argparse, time, importlib.util, psutil
-from pathlib import Path
 
 # Resolve IMPGING scripts path (works in Zo Computer + standalone)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -13,10 +12,15 @@ ALT_SCRIPTS = os.path.join(SCRIPT_DIR, "scripts")
 
 def resolve_script(name):
     """Find script in local scripts/ folder"""
-    here = Path(__file__).parent
-    local = here / "scripts" / name
-    if local.exists():
-        return str(local)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    local = os.path.join(script_dir, "scripts", name)
+    if os.path.exists(local):
+        return local
+    # Debug: show what paths were checked
+    print(f"[DEBUG] Looking for: {local}")
+    print(f"[DEBUG] Script dir: {script_dir}")
+    print(f"[DEBUG] __file__: {__file__}")
+    print(f"[DEBUG] Files in scripts/: {os.listdir(os.path.join(script_dir, 'scripts')) if os.path.exists(os.path.join(script_dir, 'scripts')) else 'NOT FOUND'}")
     return None
 
 def load_mod(name, path):
